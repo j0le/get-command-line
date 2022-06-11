@@ -4,19 +4,19 @@ param(
 
 $local:ErrorActionPreference = 'Stop'
 
-if(Test-Path -LiteralPath:$vcpkg_path -PathType:Container){
-    $vcpkg_path = $vcpkg_path | Join-Path -ChildPath:'vcpkg.exe'
-}
 
-if([string]::IsNullOrEmpty($vcpkg_path)){
+if(-not [string]::IsNullOrEmpty($vcpkg_path)){
+    if(Test-Path -LiteralPath:$vcpkg_path -PathType:Container){
+        $vcpkg_path = $vcpkg_path | Join-Path -ChildPath:'vcpkg.exe'
+    }
+
+    $vcpkg_cmd = Get-Command -Name:$vcpkg_path -ErrorAction:SilentlyContinue -CommandType:Application
+    if ($null -eq $vcpkg_cmd){
+        throw 'vcpkg could not be found under the specified path'
+    }
+}
+else {
     $vcpkg_path = 'vcpkg.exe'
-}
-
-
-
-$vcpkg_cmd = Get-Command -Name:$vcpkg_path -ErrorAction:SilentlyContinue -CommandType:Application
-if ($null -eq $vcpkg_cmd){
-    $vcpkg_path = 'vcpkg'
 
     $vcpkg_cmd = Get-Command -Name:$vcpkg_path -ErrorAction:SilentlyContinue -CommandType:Application
     if ($null -eq $vcpkg_cmd){
