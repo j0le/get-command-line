@@ -24,7 +24,7 @@ int main()
 
 
     if (std_out_point_to_console) {
-        cmdline_wstr += L"\r\n";
+        cmdline_wstr += L"\n";
 
         const wchar_t* cmdline_wcstr = cmdline_wstr.c_str();
         const DWORD absolute_number_of_chars_to_write = cmdline_wstr.length(); // without terminating null character
