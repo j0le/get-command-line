@@ -11,7 +11,7 @@ int main()
     if (std_out_handle == INVALID_HANDLE_VALUE)
         return 1;
 
-    const ::std::wstring cmdline_wstr(::GetCommandLineW());
+    ::std::wstring cmdline_wstr(::GetCommandLineW());
 
     // check if std-out points to a console screen buffer
     bool std_out_point_to_console = false;
@@ -23,6 +23,8 @@ int main()
 
 
     if (std_out_point_to_console) {
+        cmdline_wstr += L"\r\n";
+
         const wchar_t* cmdline_wcstr = cmdline_wstr.c_str();
         const DWORD absolute_number_of_chars_to_write = cmdline_wstr.length(); // without terminating null character
         DWORD absolute_number_of_chars_written = 0;
