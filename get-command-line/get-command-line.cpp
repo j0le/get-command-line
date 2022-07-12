@@ -2,12 +2,19 @@
 #include <string>
 #include <type_traits>
 #include <nowide/convert.hpp>
+#include <thread>
+#include <chrono>
 
 static_assert(true == TRUE);
 static_assert(false == FALSE);
 
 int main()
 {
+    if (false) {
+        using namespace ::std::chrono_literals;
+        ::std::this_thread::sleep_for(60s);
+    }
+
     ::HANDLE std_out_handle = GetStdHandle(STD_OUTPUT_HANDLE);
     if (std_out_handle == INVALID_HANDLE_VALUE)
         return 1;
